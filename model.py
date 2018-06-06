@@ -54,7 +54,7 @@ class Flatten(nn.Module):
 
 def train(model,loss_fn,optimizer,num_epochs):
     for epoch in range(num_epochs):
-        check_accuracy(model,loader_val)
+        acc_hist.append(check_accuracy(model,loader_val))
         print('Starting epoch %d/%d' %(epoch+1,num_epochs))
         model.train()
         for t, (x,y) in enumerate(loader_train):
@@ -109,10 +109,10 @@ optimizer = optim.Adam(simple_nn.parameters(),lr=1e-2)
 
 
 loss_hist = []
-
+acc_hist = []
 simple_nn.apply(reset)
 train(simple_nn,loss_fn,optimizer,num_epochs = 10)
 check_accuracy(simple_nn,loader_val)
 
-plt.plot(loss_hist)
+plt.plot(loss_hist,'b-',acc_hist,'r-')
 plt.show()
